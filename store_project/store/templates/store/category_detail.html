@@ -1,0 +1,9 @@
+{% extends 'store/index.html' %}
+{% block content %}
+{% if product_list|length == 0 %}
+<h1>There are no products from this category '{{category.name}}'</h1>
+{% else %}
+<h1>'{{ category.name }}' category products</h1>
+{% include 'store/includes/product_template.html' %}
+{% endif %}
+{% endblock %}

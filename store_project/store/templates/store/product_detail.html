@@ -1,0 +1,53 @@
+{% extends 'store/index.html' %}
+{% block content %}
+<main>
+    <div class="card">
+        <img src="{{product.image.url}}" class="card-img-top"
+            alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{product.title}}</h5>
+            <p class="card-text">{{product.body}}</p>
+            <p class="card-text">Price: ${{product.price}}</p>
+            <p class="card-text">
+                {% for category in product.cats.all %}
+                <a href="{{category.get_absolute_url}}">{{category.name}}</a>
+                {% endfor %}
+            </p>
+            <p class="card-text">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Buy now!!!
+                </button>
+            </p>
+        </div>
+    </div>
+</main>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" type="submit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{product.title}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/save_order" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_e-mail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="user_e-mail"
+                            aria-describedby="emailHelp" name="user_e-mail" required>
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <input type="hidden" name="product_id" value="{{product.id}}" readonly>
+                    <button type="submit" class="btn btn-primary">Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
