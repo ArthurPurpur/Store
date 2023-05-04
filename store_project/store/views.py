@@ -13,7 +13,7 @@ def save_order(request):
     order.email=request.POST["user_e-mail"]
     order.product=product
     order.save()
-    return render(request,'store/order.html')
+    return render(request,'store/order.html',context={'product_title': product.title})
 
     
 def product_list(request):
